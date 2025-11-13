@@ -1,16 +1,23 @@
 
-// 
 
 //SPDX-License-Identifier: MIT
+// MIT одна из самых свободных лицензий, которая разрешает использование, модификацию и распространение кода.
+// Может быть UNLICENSED закрытая
 pragma solidity ˆ0.8.28;
+// в данном случае до 0.9.0 до главной мажорной версии
 // можно еще так >=0.4.22 <0.9.0; 
 // также remix ide требует указать лицензию первая строка
+
 
 contract Basics {
 string public greetings;
 
 }
 
+pragma solidity ^0.8.28;
+contract HelloWorld {
+    string public greet = "Hello World";
+}
 
 
 
@@ -39,6 +46,9 @@ contract Counter {
         count -= 1;
     }
 }
+
+// Count = 0 изначально, так как переменные типа uint по умолчанию инициализируются нулем.
+
 
 
 // Улучшенная версия примера (First Application)
