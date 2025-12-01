@@ -169,7 +169,7 @@ contract Variables {
     // State variables are stored on the blockchain.
     string public text = "Hello";
     uint256 public num = 123;
-
+// Любой может прочитать их с помощью Variables.text() или Variables.num().
     function doSomething() public view {
         // Local variables are not saved to the blockchain.
         uint256 i = 456;
@@ -179,7 +179,15 @@ contract Variables {
         address sender = msg.sender; // address of the caller
     }
 }
-
+// State variables (text и num) — хранятся в блокчейне и доступны всем.
+// Local variables (i) — создаются только внутри функции и исчезают после её выполнения.
+// Global variables (block.timestamp, msg.sender) — дают информацию о блоке и вызывающем адресе.
+// Функциональности, как, например, изменение переменных или бизнес-логика, здесь нет.
+// То есть если его задеплоить и вызвать doSomething(), он ничего не изменит и просто создаёт локальные переменные на время вызова функции, но они не сохраняются.
+// По сути, это демонстрационный контракт для понимания:
+// где живут данные,
+// какие переменные сохраняются на блокчейне, а какие нет,
+// как обращаться к глобальным данным EVM.
 
 
 
@@ -200,9 +208,9 @@ contract Constants {
     uint256 public constant MY_UINT = 123;
 }
 
-
-
-
+// Значение хранится прямо в байт-коде контракта, а не в storage, поэтому не расходует gas при чтении.
+// Можно использовать для фиксированных адресов, чисел, токенов, коэффициентов и т.д.
+// Если нужно задать неизменяемое значение, но которое определяется в момент деплоя — тогда используют immutable (оно пишется только один раз в конструкторе).
 
 
 
@@ -220,7 +228,8 @@ contract Immutable {
     }
 }
 
-
+// constant — задаётся на этапе компиляции, никогда не меняется.
+// immutable — задаётся один раз при деплое в конструкторе, потом тоже не меняется.
 
 
 
@@ -245,6 +254,7 @@ contract SimpleStorage {
     // You can read from a state variable without sending a transaction.
     function get() public view returns (uint256) {
         return num;
+        // Важно: вызов view функции локально (через call) не тратит gas, если не отправляется транзакция.
     }
 }
 
